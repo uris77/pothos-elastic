@@ -1,11 +1,17 @@
-import { abstractReturnShapeKey, brandWithType, ObjectRef, typeBrandKey } from '@pothos/core';
+import {
+    abstractReturnShapeKey,
+    brandWithType,
+    ObjectRef,
+    SchemaTypes,
+    typeBrandKey
+} from '@pothos/core';
 
 
 export type WithBrand<T> = T & { [typeBrandKey]: string };
 
 // Copied from the Prisma Plugin. I'm not entirely sure what this does. Right now we are using
 // it as the return type of the elasticsearch builder.
-export class ElasticsearchObjectRef< T = {}> extends ObjectRef<T> {
+export class ElasticsearchObjectRef<Types extends SchemaTypes, T = {}>  extends ObjectRef<T> {
     [abstractReturnShapeKey]!: WithBrand<T>;
 
     constructor(name: string ) {
@@ -35,4 +41,24 @@ export class ElasticsearchObjectRef< T = {}> extends ObjectRef<T> {
             (value as { [typeBrandKey]?: unknown })[typeBrandKey] === this.name
         );
     }
+
+    // keyword<
+    //     Name extends string,
+    //     Shape,
+    //     Type extends TypeParam<Types>,
+    //     Nullable extends boolean,
+    //     ResolveReturnShape>(
+    //         ...args: NormalizeArgs<
+    // [
+    //     name: Name,
+    //     options: PothosSchemaTypes.ObjectFieldOptions<
+    //         Types,
+    //         Shape,
+    //         Type,
+    //         Nullable,
+    //         any,
+    //         ResolveReturnShape>
+    // ]>) {
+    //     const [name, options = {} as never] = args;
+    // }
 }
