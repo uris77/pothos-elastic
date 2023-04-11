@@ -1,4 +1,4 @@
-import {FieldKind, NormalizeArgs, RootFieldBuilder, SchemaTypes, TypeParam} from "@pothos/core";
+import {FieldKind, InputFieldMap, NormalizeArgs, RootFieldBuilder, SchemaTypes, TypeParam} from "@pothos/core";
 
 // Workaround for FieldKind not being extended on Builder classes
 const RootBuilder: {
@@ -23,6 +23,7 @@ export class ElasticsearchFieldBuilder<
         Type extends TypeParam<Types>,
         Nullable extends boolean,
         ResolveReturnShape,
+        Args extends InputFieldMap,
         Name extends string,
     >(
         ...args: NormalizeArgs<
@@ -33,7 +34,7 @@ export class ElasticsearchFieldBuilder<
                 Shape,
                 Type,
                 Nullable,
-                {},
+                Args,
                 ResolveReturnShape
                 >
             ]

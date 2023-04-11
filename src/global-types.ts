@@ -29,7 +29,7 @@ declare global {
             >(
                 name: string,
                 options: ElasticsearchTypeOptions<Types, Interfaces, Fields, Shape>
-            ) => ElasticsearchObjectRef<Shape>;
+            ) => ElasticsearchObjectRef<Types>;
         }
 
         export type ElasticsearchTypeOptions<
