@@ -1,0 +1,22 @@
+{
+  "name": "pothos-elastic",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.3",
+    "vite": "^4.2.0",
+    "vitest": "^0.30.1"
+  },
+  "dependencies": {
+    "@graphql-tools/schema": "^9.0.17",
+    "@pothos/core": "^3.29.0",
+    "graphql": "^16.6.0",
+    "graphql-scalars": "^1.21.3"
+  }
+}
