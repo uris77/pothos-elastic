@@ -39,7 +39,7 @@ declare global {
             Shape> = Omit<
             PothosSchemaTypes.ObjectTypeOptions<Types, Shape> | ObjectTypeWithInterfaceOptions<Types, Shape, Interfaces>,
             'fields'> & {
-            fields?: ElasticsearchObjectFieldsShape<Types, Fields>;
+            fields?: ElasticsearchObjectFieldsShape<Types, Fields, Shape>;
         };
 
     }

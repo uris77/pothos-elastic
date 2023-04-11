@@ -1,47 +1,50 @@
-import {FieldKind, InputFieldMap, NormalizeArgs, RootFieldBuilder, SchemaTypes, TypeParam} from "@pothos/core";
+import { FieldBuilder, NormalizeArgs, SchemaTypes } from '@pothos/core';
 
-// Workaround for FieldKind not being extended on Builder classes
-const RootBuilder: {
-    // eslint-disable-next-line @typescript-eslint/prefer-function-type
-    new <Types extends SchemaTypes, Shape, Kind extends FieldKind>(
-        name: string,
-        builder: PothosSchemaTypes.SchemaBuilder<Types>,
-        kind: FieldKind,
-        graphqlKind: PothosSchemaTypes.PothosKindToGraphQLType[FieldKind],
-    ): PothosSchemaTypes.RootFieldBuilder<Types, Shape, Kind>;
-} = RootFieldBuilder as never;
+type KeywordFieldOptions<
+  Types extends SchemaTypes,
+  ParentShape,
+  Nullable extends boolean,
+  IsList extends boolean,
+  ResolveReturnShape
+> = Omit<
+  PothosSchemaTypes.ObjectFieldOptions<
+    Types,
+    ParentShape,
+    IsList extends true ? ['String'] : 'String',
+    Nullable,
+    {},
+    ResolveReturnShape
+  >,
+  'resolve' | 'args' | 'type'
+> & { list: IsList };
+
 export class ElasticsearchFieldBuilder<
-    Types extends SchemaTypes,
-    NeedsResolve extends boolean,
-    Shape extends object = {}
-> extends RootBuilder<Types, Shape, 'Elasticsearch'> {
-    constructor(name: string, builder: PothosSchemaTypes.SchemaBuilder<Types>) {
-        super(name, builder, 'Elasticsearch', 'Object');
-    }
+  Types extends SchemaTypes,
+  Shape = {}
+> extends FieldBuilder<Types, Shape, 'Object'> {
+  constructor(name: string, builder: PothosSchemaTypes.SchemaBuilder<Types>) {
+    super(name, builder, 'Object', 'Object');
+  }
 
-    keyword<
-        Type extends TypeParam<Types>,
-        Nullable extends boolean,
-        ResolveReturnShape,
-        Args extends InputFieldMap,
-        Name extends string,
-    >(
-        ...args: NormalizeArgs<
-            [
-                name: Name,
-                options: PothosSchemaTypes.ObjectFieldOptions<
-                Types,
-                Shape,
-                Type,
-                Nullable,
-                Args,
-                ResolveReturnShape
-                >
-            ]
-            >
-    ) {
-        const [name] = args;
+  keyword<Nullable extends boolean, IsList extends boolean, ResolveReturnShape>(
+    ...args: NormalizeArgs<
+      [
+        options: KeywordFieldOptions<
+          Types,
+          Shape,
+          Nullable,
+          IsList,
+          ResolveReturnShape
+        >
+      ]
+    >
+  ) {
+    const [{ list, ...options }] = args;
 
-        return this.field(name);
-    }
+    return this.field({
+      ...options,
+      type: list ? ['String'] : 'String',
+      resolve: () => 'test' as never,
+    });
+  }
 }
