@@ -1,7 +1,6 @@
 import {FieldMap, InterfaceParam, Normalize, ParentShape, SchemaTypes} from "@pothos/core";
 import {ElasticsearchPlugin} from "./index";
 import {ElasticsearchObjectFieldsShape, OutputShapeFromFields} from "./types";
-import {ElasticsearchObjectRef} from "./object-ref";
 
 declare global {
     export namespace PothosSchemaTypes {
@@ -29,7 +28,7 @@ declare global {
             >(
                 name: string,
                 options: ElasticsearchTypeOptions<Types, Interfaces, Fields, Shape>
-            ) => ElasticsearchObjectRef<Types>;
+            ) => ObjectRef<Types>;
         }
 
         export type ElasticsearchTypeOptions<

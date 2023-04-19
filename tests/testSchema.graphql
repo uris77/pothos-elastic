@@ -1,0 +1,22 @@
+input CreateMovieInput {
+  director: String!
+  title: [String!]
+}
+
+type ItemType {
+  data: Movie!
+}
+
+type Movie {
+  director: String!
+  id: String!
+  title: [String!]
+}
+
+type OutputType {
+  hits: [ItemType!]!
+}
+
+type Query {
+  movie(id: String!): OutputType!
+}

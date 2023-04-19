@@ -1,0 +1,18 @@
+{
+  "movie": {
+    "properties": {
+      "__typename": {
+        "type": "keyword"
+      },
+      "id": {
+        "type": "keyword"
+      },
+      "title": {
+        "type": "keyword"
+      },
+      "director": {
+        "type": "keyword"
+      }
+    }
+  }
+}
